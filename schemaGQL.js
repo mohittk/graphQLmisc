@@ -5,14 +5,14 @@ import {gql} from 'apollo-server'
 const typeDefs = gql`
 type Query{
     users: [User]
-    user(id:ID!): User
+    user(_id:ID!): User
     quotes: [Quote]
     testq(by: ID!):[Quote]
    
 }
 
 type User{
-    id: ID,
+    _id: ID,
     firstName: String
     lastName: String
     email: String
@@ -27,16 +27,26 @@ type Quote{
 
 }
 
-type Mutation{
-    signupUserDummy(userNew: UserInput!): User
 
+type Token{
+    token: String
+}
+type Mutation{
+    signupUser(userNew: UserInput!): User
+    signInUser(userSignIn : UserSignInInput!) : Token
+    createQuote(name: String!) : String
 }
 
 input UserInput{
     firstName: String!, lastName: String!, email: String!, password: String!
-    
+}
+
+input UserSignInInput{
+    email: String!
+    password: String!
 
 }
+
 `
 
 export default typeDefs;
